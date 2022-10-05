@@ -78,3 +78,11 @@ trans_ent %>%
   distinct
 ```
 
+### Problem 2
+```{r}
+mr_trash_wheel = 
+  read_excel("Trash Wheel Collection Data.xlsx", range=cell_cols("A:N")) %>%
+  drop_na(Dumpster)
+  integer <- as.integer(mr_trash_wheel$`Sports Balls`)
+  mutate(mr_trash_wheel,revised_sport_balls = integer)
+```
