@@ -95,12 +95,13 @@ mr_trash_wheel %>%
   colSums()
 ```
 
-In mr_trash_wheel dataset, there was 547 observation and 15 variables.
+In mr_trash_wheel dataset, there are 547 observation and 14 variables.
 the total number of sports balls collected by Mr. Trash Wheel in 2020
 is `r mr_trash_wheel %>%
   filter(year== "2020") %>%
   select(sports_balls) %>%
   colSums()`
+The data arrange accourding to date.
 
 
 
@@ -123,7 +124,16 @@ In Pro_trash_Wheel, there are 822 observation and 9 variable. the total weight o
   select(weight_tons) %>%
   colSums()` tons.
 ```{r}
-full_join(mr_trash_wheel,pro_trash_wheel)
+mr_trash_wheel %>%
+  mutate(source = 'mr_trash_wheel')
+
+pro_trash_wheel %>%
+  mutate(source = 'pro_trash_wheel')
+
+new_data = bind_rows(mr_trash_wheel,pro_trash_wheel)
+new_data
+
+
 ```
 ### Problem 3
 ```{r}
@@ -132,8 +142,9 @@ pols_month =
   janitor::clean_names() %>%
   separate(col = mon,into = c("year","month","day"),sep = '-', convert = TRUE) %>%
   mutate(
-    month=month.name[.$month],
-    president = ifelse(prez_dem,"dem","gop")) %>%
+    month=month.abb[.$month],
+    president = ifelse(prez_dem,"dem","gop"),
+    month= str_to_upper(month)) %>%
   select(-day,-prez_gop,-prez_dem)
 pols_month
 ```
@@ -143,8 +154,9 @@ snp =
   janitor::clean_names() %>%
   separate(col = date,into = c("month","day","year"),sep = '/', convert = TRUE) %>%
   mutate(year=ifelse(year<23, year+2000, year+1900),
-         month=month.name[.$month],
-         year=as.integer(year)) %>%
+         month=month.abb[.$month],
+         year=as.integer(year),
+         month= str_to_upper(month)) %>%
   select(year,month,close,-day) %>%
   arrange(year,month) 
 snp
@@ -154,6 +166,13 @@ unemployment=
   read_csv("fivethirtyeight_datasets/unemployment.csv") %>%
   janitor::clean_names() %>% 
   pivot_longer(jan:dec, names_to = "month",values_to = "unemployment") %>%
-  mutate(year=as.integer(year))
+  drop_na(unemployment) %>%
+  mutate(month= str_to_upper(month),
+         year=as.integer(year))
 unemployment
 ```
+```{r}
+pol_and_snp = left_join(pols_month,snp, by=c("year","month"))
+left_join(pol_and_snp,unemployment, by=c("year","month"))
+```
+
