@@ -85,12 +85,14 @@ mr_trash_wheel =
   drop_na(Dumpster)
   integer <- as.integer(mr_trash_wheel$`Sports Balls`)
   mutate(mr_trash_wheel,revised_sport_balls = integer)
-  
-
-mr_trash_wheel[mr_trash_wheel$Year == '2000',]
 
 sum(as.integer(mr_trash_wheel$`Sports Balls`))
 ```
+In mr_trash_wheel dataset, there was 547 observation and 15 variables.
+I round the number of sports balls to the nearest integer, 
+and name the variable as revised_sport_balls.
+
+
 ```{r}
 pro_trash_wheel = 
   read_excel("Trash Wheel Collection Data.xlsx",sheet = 2) %>%
@@ -99,4 +101,4 @@ pro_trash_wheel
 
 sum(pro_trash_wheel$`Weight (tons)`)
 ```
- the total weight of trash collected by Professor Trash Wheel is `r sum(pro_trash_wheel$Weight (tons)) `
+In Pro_trash_Wheel, there are 822 observation and 9 variable. the total weight of trash collected by Professor Trash Wheel is 190.12 tons.
