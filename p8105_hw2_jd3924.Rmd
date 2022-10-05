@@ -1,0 +1,14 @@
+---
+title: "p8105_hw2_jd3924"
+author: "Jiahe Deng"
+date: "2022-10-01"
+output: github_document
+---
+
+```{r}
+library(tidyr)
+library(readxl)
+library(tidyverse)
+library(readr)
+```
+
