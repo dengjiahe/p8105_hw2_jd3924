@@ -96,9 +96,13 @@ and name the variable as revised_sport_balls.
 ```{r}
 pro_trash_wheel = 
   read_excel("Trash Wheel Collection Data.xlsx",sheet = 2) %>%
-  drop_na(Dumpster)
+  drop_na(Dumpster) %>%
+  mutate(Year=as.character(Year))
 pro_trash_wheel
 
 sum(pro_trash_wheel$`Weight (tons)`)
 ```
 In Pro_trash_Wheel, there are 822 observation and 9 variable. the total weight of trash collected by Professor Trash Wheel is 190.12 tons.
+```{r}
+full_join(mr_trash_wheel,pro_trash_wheel)
+```
