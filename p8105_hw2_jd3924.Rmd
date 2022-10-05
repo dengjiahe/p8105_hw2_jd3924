@@ -106,3 +106,15 @@ In Pro_trash_Wheel, there are 822 observation and 9 variable. the total weight o
 ```{r}
 full_join(mr_trash_wheel,pro_trash_wheel)
 ```
+### Problem 3
+```{r}
+pols_month = 
+  read_csv("fivethirtyeight_datasets/pols-month.csv") %>%
+  janitor::clean_names() %>%
+  separate(col = mon,into = c("year","month","day"),sep = '-', convert = TRUE) %>%
+  mutate(
+    month=month.name[.$month],
+    president = ifelse(prez_dem,"dem","gop")) %>%
+  select(-day,-prez_gop,-prez_dem)
+pols_month
+```
