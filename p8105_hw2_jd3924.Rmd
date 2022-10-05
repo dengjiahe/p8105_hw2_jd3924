@@ -130,3 +130,10 @@ snp =
   arrange(year,month) 
 snp
 ```
+```{r}
+unemployment= 
+  read_csv("fivethirtyeight_datasets/unemployment.csv") %>%
+  pivot_longer(Jan:Dec, names_to = "Month",values_to = "Unemployment") %>%
+  mutate(Year=as.integer(Year))
+unemployment
+```
